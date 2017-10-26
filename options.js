@@ -40,7 +40,7 @@ const updateShownTokensFound = () => {
 	let tokensFoundKeys = Object.keys(tokensFound)
 	elTokensFound.innerHTML = tokensFoundKeys.length === 0 ?
 		'<li>None</li>'
-		: tokensFoundKeys.map((token) => `<li>${tokensFound[token].username}#${tokensFound[token].discriminator}: <a class="token" href="#">${token}</a></li>`).join();
+		: tokensFoundKeys.map((token) => `<li>${tokensFound[token].username}#${tokensFound[token].discriminator}: <a class="token" href="#">${token}</a></li>`).join('');
 	for (tokenLink of document.getElementsByClassName('token')) {
 		tokenLink.addEventListener('click', (e) => {document.getElementById('user_token').value = tokenLink.innerHTML;});
 	}
