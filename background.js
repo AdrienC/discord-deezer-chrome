@@ -8,7 +8,7 @@ const OS = navigator.platform;
 const BROWSER = 'Chrome';
 const EXTENSION_NAME = 'Deezer Discord Integration';
 
-const DELAY_CHECK_TABS = 1000;
+const DELAY_CHECK_TABS = 2000;
 const DELAY_CLOSE_WS = 180000;
 const TITLE_SEPARATOR = ' - ';
 
