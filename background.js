@@ -20,12 +20,16 @@ let closeWsTimer;
 let lastSeq = null;
 
 /* Send notification */
-const notify = (message) => chrome.notifications.create({
-	type: 'basic',
-	iconUrl: ICON_URL,
-	title: EXTENSION_NAME,
-	message: message,
-});
+const notify = (message) => {
+	if (notificationsEnabled) {
+			chrome.notifications.create({
+			type: 'basic',
+			iconUrl: ICON_URL,
+			title: EXTENSION_NAME,
+			message: message,
+		});
+	}
+};
 
 const formatTabTitle = (title) => {
 	const splitTitle = title.split(TITLE_SEPARATOR);
