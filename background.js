@@ -25,7 +25,7 @@ const notify = (message) => chrome.notifications.create({
 	iconUrl: ICON_URL,
 	title: EXTENSION_NAME,
 	message: message,
-});	
+});
 
 const formatTabTitle = (title) => {
 	const splitTitle = title.split(TITLE_SEPARATOR);
@@ -69,12 +69,12 @@ const start = () => {
 	/* Track options changes */
 	chrome.storage.onChanged.addListener((changes, areaName) => {
 		if ('userToken' in changes) {
-			userToken = changes.userToken;
+			userToken = changes.userToken.newValue;
 			closeWs();
 			delayCheckIfStatusUpdateNeeded();
 		}
 		if ('notificationsEnabled' in changes) {
-			notificationsEnabled = changes.notificationsEnabled;
+			notificationsEnabled = changes.notificationsEnabled.newValue;
 		}
 	});
 };
