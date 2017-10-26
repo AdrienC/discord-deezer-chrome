@@ -2,9 +2,11 @@
 function save_options() {
 	var userToken = document.getElementById('user_token').value;
 	var notificationsEnabled = document.getElementById('notifications_enabled').checked;
+	var loggingEnabled = document.getElementById('logging_enabled').checked;
 	chrome.storage.sync.set({
 		userToken: userToken,
-		notificationsEnabled: notificationsEnabled
+		notificationsEnabled: notificationsEnabled,
+		loggingEnabled: loggingEnabled
 	}, function() {
 		// Update status to let user know options were saved.
 		var status = document.getElementById('status');
@@ -20,10 +22,12 @@ function save_options() {
 function restore_options() {
 	chrome.storage.sync.get({
 		userToken: null,
-		notificationsEnabled: true
+		notificationsEnabled: true,
+		loggingEnabled: false
 	}, function(items) {
 		document.getElementById('user_token').value = items.userToken;
 		document.getElementById('notifications_enabled').checked = items.notificationsEnabled;
+		document.getElementById('logging_enabled').checked = items.loggingEnabled;
 	});
 }
 document.addEventListener('DOMContentLoaded', restore_options);

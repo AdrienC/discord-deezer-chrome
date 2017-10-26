@@ -1,5 +1,6 @@
 let userToken = null;
 let notificationsEnabled = true;
+let loggingEnabled = false;
 const DISCORD_GATEWAY_ENDPOINT = 'wss://gateway.discord.gg/?v=6&encoding=json';
 const DEEZER_HOSTNAME = 'www.deezer.com';
 const ICON_URL = 'discord48.png';
@@ -19,15 +20,21 @@ let heartbeatTimer;
 let closeWsTimer;
 let lastSeq = null;
 
+const log = (message, force = false) => {
+	if (loggingEnabled || force) {
+		console.log(message);
+	}
+};
 /* Send notification */
 const notify = (message) => {
 	if (notificationsEnabled) {
 			chrome.notifications.create({
-			type: 'basic',
-			iconUrl: ICON_URL,
-			title: EXTENSION_NAME,
-			message: message,
-		});
+				type: 'basic',
+				iconUrl: ICON_URL,
+				title: EXTENSION_NAME,
+				message: message,
+			});
+			log(`new notification '${message}'`);
 	}
 };
 
@@ -72,22 +79,31 @@ const start = () => {
 	delayCheckIfStatusUpdateNeeded();
 	/* Track options changes */
 	chrome.storage.onChanged.addListener((changes, areaName) => {
+		if ('loggingEnabled' in changes) {
+			loggingEnabled = changes.loggingEnabled.newValue;
+			log(`loggingEnabled updated to ${loggingEnabled}`, true);
+		}
 		if ('userToken' in changes) {
 			userToken = changes.userToken.newValue;
 			closeWs();
 			delayCheckIfStatusUpdateNeeded();
+			log(`userToken updated to ${userToken}`);
 		}
 		if ('notificationsEnabled' in changes) {
 			notificationsEnabled = changes.notificationsEnabled.newValue;
+			log(`notificationsEnabled updated to ${notificationsEnabled}`);
 		}
 	});
 };
 chrome.storage.sync.get({
 	userToken: userToken,
-	notificationsEnabled: notificationsEnabled
+	notificationsEnabled: notificationsEnabled,
+	loggingEnabled: loggingEnabled
 }, function(items) {
 	userToken = items.userToken;
 	notificationsEnabled = items.notificationsEnabled;
+	loggingEnabled = items.loggingEnabled;
+	log(`options set to:\n- userToken: ${userToken}\n- notificationsEnabled: ${notificationsEnabled}\n- loggingEnabled: ${loggingEnabled}`);
 	start();
 });
 
@@ -130,6 +146,7 @@ const getOpStatusUpdatePayload = (status) => ({
 const sendHeartbeat = () => {
 	if (ws !== undefined && ws.readyState === WebSocket.OPEN) {
 		ws.send(JSON.stringify(getOpHeartbeatPayload()));
+		log(`sent heartbeat: ${JSON.stringify(getOpHeartbeatPayload(), null, 4)}`);
 	}
 };
 /* Process received message */
@@ -138,10 +155,12 @@ const messageHandler = (data) => {
 	switch (data.op) {
 	case 1:
 		/* heartbeat request */
+		log(`received heartbeat request: ${JSON.stringify(data, null, 4)}`);
 		sendHeartbeat();
 		break;
 	case 10:
 		/* hello */
+		log(`received hello message: ${JSON.stringify(data, null, 4)}`);
 		clearInterval(heartbeatTimer);
 		heartbeatTimer = setInterval(sendHeartbeat, data.d.heartbeat_interval)
 		break;
@@ -152,12 +171,14 @@ const messageHandler = (data) => {
 const closeWs = () => {
 	if (ws !== undefined && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
 		ws.close();
+		log('extension closed websocket');
 	}
 };
 /* Track and notify status change */
 const discordStatusChanged = (newStatus) => {
 	currentDiscordStatus = newStatus;
-	notify('Status: ' + (currentDiscordStatus === null ? 'None' : currentDiscordStatus));
+	let statusText = currentDiscordStatus === null ? 'None' : currentDiscordStatus;
+	notify(`Status: ${statusText}`);
 
 	/* Close connection if there's no tab playing for DELAY_CLOSE_WS ms */
 	clearTimeout(closeWsTimer);
@@ -174,19 +195,25 @@ const setDiscordStatus = (newStatus) => {
 
 	if (ws === undefined || ws.readyState === WebSocket.CLOSED) {
 		/* Connect websocket */
+		log('initialize websocket...');
 		ws = new WebSocket(DISCORD_GATEWAY_ENDPOINT);
 		lastSeq = null;
 		ws.onopen = (e) => {
 			/* Identify and send initial status */
 			ws.send(JSON.stringify(getOpIdentifyPayload(newStatus)));
+			log(`sent IDENTIFY operation on new connection: ${JSON.stringify(getOpIdentifyPayload(newStatus), null, 4)}`);
 			discordStatusChanged(newStatus);
 		};
 		ws.onmessage = (e) => messageHandler(JSON.parse(e.data));
-		ws.onerror = (e) => console.log('Connection error: %s', JSON.stringify(e, null, 4));
-		ws.onclose = (e) => clearInterval(heartbeatTimer);
+		ws.onerror = (e) => log(`Connection error: ${JSON.stringify(e, null, 4)}`, true);
+		ws.onclose = (e) => {
+			log(`Connection closed, code: ${e.code}, reason: ${e.reason}, wasClean: ${e.wasClean}`);
+			clearInterval(heartbeatTimer);
+		};
 	} else if (ws.readyState === WebSocket.OPEN) {
 		/* Send status update */
 		ws.send(JSON.stringify(getOpStatusUpdatePayload(newStatus)));
+		log(`sent STATUS_UPDATE operation: ${JSON.stringify(getOpStatusUpdatePayload(newStatus), null, 4)}`);
 		discordStatusChanged(newStatus);
 	} else if (ws.readyState === WebSocket.CONNECTING || ws.readyState === WebSocket.CLOSING) {
 		/* Retry later */
