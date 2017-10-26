@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Deezer Discord Integration options</title>
+		<style type="text/css">
+			body {
+				margin: 10px;
+				font-size: 1em;
+			}
+
+			h1 {
+				font-size: 1.2em;
+			}
+
+			#container {
+				align-items: left;
+				align-items: left;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+
+			#container label {
+				margin: 5px;
+				text-align: baseline;
+			}
+
+			#user_token {
+				width: 40em;
+			}
+
+			.details {
+				border: 1px solid black;
+				padding: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>Deezer Discord Integration</h1>
+		<div id="container">
+			<label>
+				user token <input type="text" id="user_token">
+			</label>
+			User tokens found in Discord open tabs:
+			<ul id="tokensfound">
+			</ul>
+			<div class="details">
+				To find yourself your user token: open Discord in Chrome, press CTRL-SHIFT-I, go to the 'Application' tab and you'll find the token in Storage / Local Storage / https://discordapp.com in front of the key 'token'. (Don't copy the double quotes!)
+			</div>
+			<label>
+				<input type="checkbox" id="notifications_enabled"> show notifications
+			</label>
+			<div id="status"> </div>
+			<button id="save">Save</button>
+		</div>
+		<script src="options.js"></script>
+	</body>
+</html>
