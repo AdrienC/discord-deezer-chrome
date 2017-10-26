@@ -4,7 +4,7 @@
 	"name": "Deezer Discord Integration",
 	"short_name": "Deezer Discord I",
 	"description": "This extension allows the user to display Deezer's current playing song in Discord status.",
-	"version": "0.0.3",
+	"version": "0.0.4",
 
 	"icons": {
 		"16": "discord16.png",
