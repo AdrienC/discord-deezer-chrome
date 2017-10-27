@@ -38,12 +38,13 @@ const notify = (message) => {
 	}
 };
 
+const cleanTitleRegexp = new RegExp(TITLE_SEPARATOR + 'Deezer(?=' + TITLE_SEPARATOR + ')', 'g');
 const formatTabTitle = (title) => {
 	const splitTitle = title.split(TITLE_SEPARATOR);
 	if (splitTitle.length === 3) {
 		return splitTitle[1] + TITLE_SEPARATOR + splitTitle[0] + TITLE_SEPARATOR + splitTitle[2];
 	} else {
-		return title;
+		return title.replace(cleanTitleRegexp, '');
 	}
 };
 const getStatusFromTabs = (tabs) => {
