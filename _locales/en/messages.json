@@ -1,0 +1,52 @@
+{
+  "appname": {
+    "message": "Deezer Discord Integration",
+    "description": "The title of the application, displayed in the web store."
+  },
+  "appdesc": {
+    "message": "This extension allows the user to display Deezer's current playing song in Discord status.",
+    "description": "The description of the application, displayed in the web store."
+  },
+
+  "status": {
+    "message": "Status",
+    "description": "Discord status"
+  },
+  "statusNone": {
+    "message": "None",
+    "description": "Discord 'none' status"
+  },
+  "cantSetStatusUserTokenNotSet": {
+    "message": "Can't set status, user token is not set.",
+    "description": "Can't set status because user token is not set."
+  },
+
+  "apiLimitation": {
+    "message": "Due to the Discord API, you can't see your status changes in Discord, but other users can.",
+    "description": "Explanation of the discord API limitation who prevents showing self status changes."
+  },
+  "userToken": {
+    "message": "user token",
+    "description": "discord user token"
+  },
+  "userTokenFounds": {
+    "message": "User tokens found in Discord open tabs",
+    "description": "User tokens found in Discord open tabs"
+  },
+  "howToFindToken": {
+    "message": "To find yourself your user token: open Discord in Chrome, press CTRL-SHIFT-I, go to the 'Application' tab and you'll find the token in Storage / Local Storage / https://discordapp.com in front of the key 'token'. (Don't copy the double quotes!)",
+    "description": "How to find user token"
+  },
+  "showNotifications": {
+    "message": "show notifications",
+    "description": "Show notifications option"
+  },
+  "enableLogging": {
+    "message": "enable logging",
+    "description": "Enable logging option"
+  },
+  "save": {
+    "message": "Save",
+    "description": "Save button caption"
+  }
+}

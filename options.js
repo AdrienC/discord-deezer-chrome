@@ -1,3 +1,19 @@
+const localizeHtmlPage = () => {
+  //Localize by replacing __MSG_***__ meta tags
+  let objects = document.getElementsByTagName('html');
+	for (obj of objects) {
+    let valStrH = obj.innerHTML.toString();
+    let valNewH = valStrH.replace(
+			/__MSG_(\w+)__/g,
+			(match, v1) => v1 ? chrome.i18n.getMessage(v1) : ''
+		);
+    if (valNewH != valStrH) {
+        obj.innerHTML = valNewH;
+    }
+  }
+};
+localizeHtmlPage();
+
 // Saves options to chrome.storage
 function save_options() {
 	var userToken = document.getElementById('user_token').value;

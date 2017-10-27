@@ -177,8 +177,8 @@ const closeWs = () => {
 /* Track and notify status change */
 const discordStatusChanged = (newStatus) => {
 	currentDiscordStatus = newStatus;
-	let statusText = currentDiscordStatus === null ? 'None' : currentDiscordStatus;
-	notify(`Status: ${statusText}`);
+	let statusText = currentDiscordStatus === null ? chrome.i18n.getMessage('statusNone') : currentDiscordStatus;
+	notify(chrome.i18n.getMessage('status') + ': ' + statusText);
 
 	/* Close connection if there's no tab playing for DELAY_CLOSE_WS ms */
 	clearTimeout(closeWsTimer);
@@ -189,7 +189,7 @@ const discordStatusChanged = (newStatus) => {
 /* Update status */
 const setDiscordStatus = (newStatus) => {
 	if (userToken === null || userToken.length === 0) {
-		notify('Can\'t set status, user token is not set.');
+		notify(chrome.i18n.getMessage('cantSetStatusUserTokenNotSet'));
 		return;
 	}
 

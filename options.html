@@ -37,26 +37,26 @@
 	</head>
 
 	<body>
-		<h1>Deezer Discord Integration</h1>
-		<p>Due to the Discord API, you can't see your status changes in Discord, but other users can.</p>
+		<h1>__MSG_appName__</h1>
+		<p>__MSG_apiLimitation__</p>
 		<div id="container">
 			<label>
-				user token <input type="text" id="user_token">
+				__MSG_userToken__ <input type="text" id="user_token">
 			</label>
-			User tokens found in Discord open tabs:
+			__MSG_userTokenFounds__:
 			<ul id="tokensfound">
 			</ul>
 			<div class="details">
-				To find yourself your user token: open Discord in Chrome, press CTRL-SHIFT-I, go to the 'Application' tab and you'll find the token in Storage / Local Storage / https://discordapp.com in front of the key 'token'. (Don't copy the double quotes!)
+				__MSG_howToFindToken__
 			</div>
 			<label>
-				<input type="checkbox" id="notifications_enabled"> show notifications
+				<input type="checkbox" id="notifications_enabled"> __MSG_showNotifications__
 			</label>
 			<label>
-				<input type="checkbox" id="logging_enabled"> enable logging
+				<input type="checkbox" id="logging_enabled"> __MSG_enableLogging__
 			</label>
 			<div id="status"> </div>
-			<button id="save">Save</button>
+			<button id="save">__MSG_save__</button>
 		</div>
 		<script src="options.js"></script>
 	</body>
