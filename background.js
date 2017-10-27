@@ -27,16 +27,17 @@ const log = (message, force = false) => {
 	}
 };
 /* Send notification */
-const notify = (message, callback = null) => {
+const notify = (message, callback) => {
+	let callbackIsFunction = typeof callback === 'function';
 	if (notificationsEnabled) {
 			chrome.notifications.create({
 				type: 'basic',
 				iconUrl: ICON_URL,
 				title: EXTENSION_NAME,
 				message: message,
-				isClickable: callback !== null,
+				isClickable: callbackIsFunction,
 			}, (notifId) => {
-				if (callback !== undefined) {
+				if (callbackIsFunction) {
 					let notifCallback = (nid) => {
 						if (nid === notifId) {
 							callback();
