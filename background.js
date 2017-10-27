@@ -15,6 +15,7 @@ const TITLE_SEPARATOR = ' - ';
 
 let ws;
 let currentDiscordStatus = null;
+let currentPlayingTab = null;
 let checkTabsTimer;
 let heartbeatTimer;
 let closeWsTimer;
@@ -26,13 +27,24 @@ const log = (message, force = false) => {
 	}
 };
 /* Send notification */
-const notify = (message) => {
+const notify = (message, callback = null) => {
 	if (notificationsEnabled) {
 			chrome.notifications.create({
 				type: 'basic',
 				iconUrl: ICON_URL,
 				title: EXTENSION_NAME,
 				message: message,
+				isClickable: callback !== null,
+			}, (notifId) => {
+				if (callback !== undefined) {
+					let notifCallback = (nid) => {
+						if (nid === notifId) {
+							callback();
+						}
+					};
+					chrome.notifications.onClicked.addListener(notifCallback);
+					chrome.notifications.onClosed.removeListener(notifCallback);
+				}
 			});
 			log(`new notification '${message}'`);
 	}
@@ -51,7 +63,10 @@ const getStatusFromTabs = (tabs) => {
 	if (tabs.length === 0) {
 		return null;
 	} else {
-		return formatTabTitle(tabs[0].title);
+		return {
+			tabId: tabs[0].id,
+			title: formatTabTitle(tabs[0].title)
+		};
 	}
 };
 const audibleDeezerTabQuery = {
@@ -64,9 +79,10 @@ const delayCheckIfStatusUpdateNeeded = () => {
 };
 const checkIfStatusUpdateNeeded = () => {
 	chrome.tabs.query(audibleDeezerTabQuery, (tabs) => {
-		let newStatus = getStatusFromTabs(tabs);
+		let newStatusInfos = getStatusFromTabs(tabs);
+		let newStatus = newStatusInfos === null ? null : newStatusInfos.title;
 		if (newStatus !== currentDiscordStatus) {
-			setDiscordStatus(newStatus);
+			setDiscordStatus(newStatus, newStatusInfos === null ? null : newStatusInfos.tabId);
 		}
 	});
 };
@@ -176,10 +192,16 @@ const closeWs = () => {
 	}
 };
 /* Track and notify status change */
-const discordStatusChanged = (newStatus) => {
+const discordStatusChanged = (newStatus, tabId) => {
 	currentDiscordStatus = newStatus;
 	let statusText = currentDiscordStatus === null ? chrome.i18n.getMessage('statusNone') : currentDiscordStatus;
-	notify(chrome.i18n.getMessage('status') + ': ' + statusText);
+	notify(
+		chrome.i18n.getMessage('status') + ': ' + statusText,
+		tabId === null ? null : () => {
+			chrome.tabs.update(tabId, {active: true});
+			log(`status notification '${statusText}' clicked, tab switched to ${tabId}.`);
+		}
+	);
 
 	/* Close connection if there's no tab playing for DELAY_CLOSE_WS ms */
 	clearTimeout(closeWsTimer);
@@ -188,9 +210,15 @@ const discordStatusChanged = (newStatus) => {
 	}
 };
 /* Update status */
-const setDiscordStatus = (newStatus) => {
+const setDiscordStatus = (newStatus, tabId) => {
 	if (userToken === null || userToken.length === 0) {
-		notify(chrome.i18n.getMessage('cantSetStatusUserTokenNotSet'));
+		notify(
+			chrome.i18n.getMessage('cantSetStatusUserTokenNotSet'),
+			() => {
+				chrome.tabs.create({ 'url': 'chrome://extensions/?options=' + chrome.runtime.id });
+				log(`cantSetStatusUserTokenNotSet notification clicked, options tab opened.`);
+			}
+		);
 		return;
 	}
 
@@ -203,7 +231,7 @@ const setDiscordStatus = (newStatus) => {
 			/* Identify and send initial status */
 			ws.send(JSON.stringify(getOpIdentifyPayload(newStatus)));
 			log(`sent IDENTIFY operation on new connection: ${JSON.stringify(getOpIdentifyPayload(newStatus), null, 4)}`);
-			discordStatusChanged(newStatus);
+			discordStatusChanged(newStatus, tabId);
 		};
 		ws.onmessage = (e) => messageHandler(JSON.parse(e.data));
 		ws.onerror = (e) => log(`Connection error: ${JSON.stringify(e, null, 4)}`, true);
@@ -215,7 +243,7 @@ const setDiscordStatus = (newStatus) => {
 		/* Send status update */
 		ws.send(JSON.stringify(getOpStatusUpdatePayload(newStatus)));
 		log(`sent STATUS_UPDATE operation: ${JSON.stringify(getOpStatusUpdatePayload(newStatus), null, 4)}`);
-		discordStatusChanged(newStatus);
+		discordStatusChanged(newStatus, tabId);
 	} else if (ws.readyState === WebSocket.CONNECTING || ws.readyState === WebSocket.CLOSING) {
 		/* Retry later */
 		delayCheckIfStatusUpdateNeeded();
