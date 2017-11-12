@@ -98,14 +98,16 @@ function init() {
       case 'tokensFound':
         if (newValue.length === 0) {
           tokensSelection.innerHTML = `
-            <p class="mdl-checkbox__label">
-              None found, <a href="https://discordapp.com/channels/@me" target="_blank">please connect to Discord</a>
-            </p>
+            <li class="mdl-list__item">
+              <span class="mdl-list__item-primary-content">
+                ${chrome.i18n.getMessage('tokensNoneDetected')},&nbsp;<a href="https://discordapp.com/channels/@me" target="_blank">${chrome.i18n.getMessage('tokensConnectToDiscord')}</a>
+              </span>
+            </li>
           `;
         } else {
           tokensSelection.innerHTML = newValue.map((token) => `
-            <li>
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+            <li class="mdl-list__item">
+              <label class="mdl-list__item-primary-content mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
                 <input type="checkbox" class="mdl-checkbox__input" value="${token}">
                 <span class="mdl-checkbox__label">${token}</span>
                 <button class="mdl-button mdl-js-button mdl-button--icon">

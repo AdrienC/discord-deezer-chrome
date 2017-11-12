@@ -41,6 +41,14 @@
     "message": "The selected accounts:",
     "description": "Only the Discord accounts selected in the following list"
   },
+  "tokensNoneDetected": {
+    "message": "None detected",
+    "description": "Displayed when no token has been detected"
+  },
+  "tokensConnectToDiscord": {
+    "message": "please connect to Discord",
+    "description": "Displayed when no token has been detected"
+  },
   "informations": {
     "message": "Shown informations",
     "description": "Config category for shown informations"

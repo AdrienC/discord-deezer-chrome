@@ -17,8 +17,12 @@
       .warning {
         background-color: cornsilk;
       }
-      .list-nodisc {
-        list-style-type: none;
+      .mdl-list {
+        padding: 0 0 8px 0;
+      }
+      .mdl-list__item {
+        min-height: 16px;
+        padding: 0 32px 4px 32px;
       }
     </style>
 
@@ -68,9 +72,11 @@
             <input type="radio" class="mdl-radio__button" name="tokens_policy" value="selection">
             <span class="mdl-radio__label">__MSG_tokensSelection__</span>
           </label>
-          <ul id="tokens_selection" class="list-nodisc">
-            <li>
-              <div class="mdl-spinner mdl-js-spinner is-active"></div>
+          <ul id="tokens_selection" class="mdl-list">
+            <li class="mdl-list__item">
+              <span class="mdl-list__item-primary-content">
+                <div class="mdl-spinner mdl-js-spinner is-active"></div>
+              </span>
             </li>
           </ul>
         </p>

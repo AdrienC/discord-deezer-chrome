@@ -31,6 +31,12 @@
   "tokensSelection": {
     "message": "Les comptes sélectionnés :"
   },
+  "tokensNoneDetected": {
+    "message": "Aucun détecté"
+  },
+  "tokensConnectToDiscord": {
+    "message": "veuillez vous connecter à Discord"
+  },
   "informations": {
     "message": "Informations affichées"
   },
