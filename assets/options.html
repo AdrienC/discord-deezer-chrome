@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Deezer Discord Integration options</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-red.min.css">
+    <style>
+      .page-content {
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        padding: 2em;
+      }
+      .warning {
+        background-color: cornsilk;
+      }
+      .list-nodisc {
+        list-style-type: none;
+      }
+    </style>
+
+		<!--
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	-->
+    <script defer src="options.bundle.js"></script>
+  </head>
+
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">__MSG_appName__</span>
+          <div class="mdl-layout-spacer"></div>
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="https://github.com/AdrienC/discord-deezer-chrome"><img src="GitHub-Mark-Light-32px.png" alt="GitHub Logo"></a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">__MSG_appName__</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="https://github.com/AdrienC/discord-deezer-chrome">GitHub</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+
+        <h6 class="mdl-color-text--accent">__MSG_apiLimitation__</h6>
+
+        <h4>__MSG_tokens__</h4>
+        <p>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
+            <input type="radio" class="mdl-radio__button" name="tokens_policy" value="last">
+            <span class="mdl-radio__label">__MSG_tokensLast__ <span id="last_token_found"></span></span>
+          </label>
+        </p>
+        <p>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
+            <input type="radio" class="mdl-radio__button" name="tokens_policy" value="all">
+            <span class="mdl-radio__label">__MSG_tokensAll__</span>
+          </label>
+        </p>
+        <p>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
+            <input type="radio" class="mdl-radio__button" name="tokens_policy" value="selection">
+            <span class="mdl-radio__label">__MSG_tokensSelection__</span>
+          </label>
+          <ul id="tokens_selection" class="list-nodisc">
+            <li>
+              <div class="mdl-spinner mdl-js-spinner is-active"></div>
+            </li>
+          </ul>
+        </p>
+        <h4>__MSG_informations__</h4>
+        <p>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+            <input type="checkbox" id="notifications_enabled" class="mdl-checkbox__input">
+            <span class="mdl-checkbox__label">__MSG_showNotifications__</span>
+          </label>
+        </p>
+        <p>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+            <input type="checkbox" id="logging_enabled" class="mdl-checkbox__input">
+            <span class="mdl-checkbox__label">__MSG_enableLogging__</span>
+          </label>
+        </p>
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "appname": {
+    "message": "Deezer Discord Integration"
+  },
+  "appdesc": {
+    "message": "Cette extension permet à l'utilisateur d'afficher le morceau joué par Deezer dans le statut   Discord."
+  },
+
+  "status": {
+    "message": "Statut"
+  },
+  "statusNone": {
+    "message": "Aucun"
+  },
+  "cantSetStatusUserTokenNotSet": {
+    "message": "Le statut ne peut être changé, le token utilisateur n'est pas renseigné."
+  },
+
+  "apiLimitation": {
+    "message": "L'API Discord ne permet pas de voir vos propres changements de statut dans Discord, seuls les autres utilisateurs les verront."
+  },
+  "tokens": {
+    "message": "Comptes Discord utilisés"
+  },
+  "tokensLast": {
+    "message": "Dernier compte détecté"
+  },
+  "tokensAll": {
+    "message": "Tous les comptes détectés, et ajoute les comptes qui seront détectés"
+  },
+  "tokensSelection": {
+    "message": "Les comptes sélectionnés :"
+  },
+  "informations": {
+    "message": "Informations affichées"
+  },
+  "showNotifications": {
+    "message": "Notifications"
+  },
+  "enableLogging": {
+    "message": "Journal des messages dans la console"
+  }
+}

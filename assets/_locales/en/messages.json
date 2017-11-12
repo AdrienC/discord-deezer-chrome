@@ -22,31 +22,35 @@
   },
 
   "apiLimitation": {
-    "message": "Due to the Discord API, you can't see your status changes in Discord, but other users can.",
+    "message": "The Discord API doesn't allow you to see your status changes in Discord, only other users can.",
     "description": "Explanation of the discord API limitation who prevents showing self status changes."
   },
-  "userToken": {
-    "message": "user token",
-    "description": "discord user token"
+  "tokens": {
+    "message": "Discord accounts used",
+    "description": "User tokens"
   },
-  "userTokenFounds": {
-    "message": "User tokens found in Discord open tabs",
-    "description": "User tokens found in Discord open tabs"
+  "tokensLast": {
+    "message": "Last account detected",
+    "description": "Last Discord account detected"
   },
-  "howToFindToken": {
-    "message": "To find yourself your user token: open Discord in Chrome, press CTRL-SHIFT-I, go to the 'Application' tab and you'll find the token in Storage / Local Storage / https://discordapp.com in front of the key 'token'. (Don't copy the double quotes!)",
-    "description": "How to find user token"
+  "tokensAll": {
+    "message": "All accounts detected, and add the accounts that will be detected",
+    "description": "All Discord accounts detected, and add the accounts that will be detected"
+  },
+  "tokensSelection": {
+    "message": "The selected accounts:",
+    "description": "Only the Discord accounts selected in the following list"
+  },
+  "informations": {
+    "message": "Shown informations",
+    "description": "Config category for shown informations"
   },
   "showNotifications": {
-    "message": "show notifications",
+    "message": "Notifications",
     "description": "Show notifications option"
   },
   "enableLogging": {
-    "message": "enable logging",
-    "description": "Enable logging option"
-  },
-  "save": {
-    "message": "Save",
-    "description": "Save button caption"
+    "message": "Logging in console",
+    "description": "Enable logging option in console"
   }
 }
