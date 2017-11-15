@@ -11,7 +11,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new CopyWebpackPlugin(['./assets']),
-    // new UglifyJSPlugin(),
+    new UglifyJSPlugin(),
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),

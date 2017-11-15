@@ -4,8 +4,6 @@ import AudibleTabTitleTracker from './AudibleTabTitleTracker';
 import DiscordGateway from './DiscordGateway';
 import TokensTracker from './TokensTracker';
 
-// const GET_USER_URL = 'https://discordapp.com/api/users/@me';
-
 const DEEZER_HOSTNAME = 'www.deezer.com';
 const DEEZER_TAB_TITLE_DEBOUNCE_DELAY = 3000;
 const TITLE_SEPARATOR = ' - ';
@@ -25,7 +23,6 @@ function formatTabTitle(title) {
 /* Track Deezer playing tab title changes */
 const audibleTabTitleTracker = new AudibleTabTitleTracker(DEEZER_HOSTNAME, DEEZER_TAB_TITLE_DEBOUNCE_DELAY);
 audibleTabTitleTracker.onCurrentAudibleTabChange = (tabInfos) => {
-  // console.log('onCurrentAudibleTabChange: ' + JSON.stringify(tabInfos, null, 4));
   let discordGateways = Object.values(tokensDiscordGateways);
   if (discordGateways.length > 0) {
     let newStatus = tabInfos ? formatTabTitle(tabInfos.title) : null;
@@ -52,7 +49,6 @@ audibleTabTitleTracker.onCurrentAudibleTabChange = (tabInfos) => {
 
 const tokensTracker = new TokensTracker();
 tokensTracker.onFound = (foundToken) => {
-	console.log(`onfound ${foundToken}...`);
   if (config.lastTokenFound !== foundToken) {
     config.lastTokenFound = foundToken;
   }
@@ -105,7 +101,7 @@ config.onChanged = (changeInfo) => {
 }
 
 config.load().then(() => {
-	tokensTracker.start();
+  tokensTracker.start();
   /* Start tracking Deezer audible tab title */
   audibleTabTitleTracker.start();
 });

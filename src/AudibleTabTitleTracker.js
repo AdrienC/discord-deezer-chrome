@@ -6,7 +6,6 @@ export default class AudibleTabTitleTracker {
     this._tabsQuery = { url: `*://${hostname}/*` };
     this._debounceDelay = debounceDelay;
     this._tabs = {};
-    // this._currentAudibleTab; /* null to fire currentAudibleTabChanged on startup */
     this._started = false;
     this._listeners = {
       onCreated: this._onTabCreated.bind(this),
@@ -120,31 +119,17 @@ export default class AudibleTabTitleTracker {
   _findCurrentAudibleTab() {
     return Object.values(this._tabs)
       .find((tab) => tab.audible);
-    // for (let tab of Object.values(this._tabs)) {
-    //   if (tab.audible) {
-    //     return tab;
-    //   }
-    // }
-    // for (let tabId in this._tabs) {
-    //   if (this._tabs[tabId].audible) {
-    //     return this._tabs[tabId];
-    //   }
-    // }
-    // return null;
   }
   _checkForCurrentAudibleTabChange() {
     const newCurrentAudibleTab = this._findCurrentAudibleTab();
     if (newCurrentAudibleTab !== this._currentAudibleTab) {
-      // let titleChanged = !newCurrentAudibleTab || !this._currentAudibleTab || newCurrentAudibleTab.title !== this._currentAudibleTab.title;
       this._currentAudibleTab = newCurrentAudibleTab ? {...newCurrentAudibleTab} : undefined;
-      // if (titleChanged) {
-        if (this._debounceDelay > 0) {
-          clearTimeout(this._debounceTimer);
-          this._debounceTimer = setTimeout(this._currentAudibleTabChanged.bind(this), this._debounceDelay);
-        } else {
-          this._currentAudibleTabChanged();
-        }
-      // }
+      if (this._debounceDelay > 0) {
+        clearTimeout(this._debounceTimer);
+        this._debounceTimer = setTimeout(this._currentAudibleTabChanged.bind(this), this._debounceDelay);
+      } else {
+        this._currentAudibleTabChanged();
+      }
     }
   }
   _currentAudibleTabChanged() {

@@ -1,15 +1,15 @@
 import config from './Config';
 import MaterialDesignLite from 'material-design-lite';
 
+/* Localize by replacing __MSG_***__ meta tags */
 function localizeHtmlPage() {
-  //Localize by replacing __MSG_***__ meta tags
   let objects = document.getElementsByTagName('html');
-	for (let obj of objects) {
+  for (let obj of objects) {
     let valStrH = obj.innerHTML.toString();
     let valNewH = valStrH.replace(
-			/__MSG_(\w+)__/g,
-			(match, v1) => v1 ? chrome.i18n.getMessage(v1) : ''
-		);
+      /__MSG_(\w+)__/g,
+      (match, v1) => v1 ? chrome.i18n.getMessage(v1) : ''
+    );
     if (valNewH != valStrH) {
         obj.innerHTML = valNewH;
     }
@@ -22,13 +22,13 @@ let lastTokenFoundSpan = document.getElementById('last_token_found');
 
 const GET_USER_URL = 'https://discordapp.com/api/users/@me';
 function loadTokenUsername(token) {
-	let http = new XMLHttpRequest();
-	http.open('GET', GET_USER_URL, true);
-	http.setRequestHeader('Authorization', token);
-	http.setRequestHeader('Content-Type', 'application/json');
-	http.onload = () => {
-		if (http.status === 200) {
-			let userInfo = JSON.parse(http.responseText);
+  let http = new XMLHttpRequest();
+  http.open('GET', GET_USER_URL, true);
+  http.setRequestHeader('Authorization', token);
+  http.setRequestHeader('Content-Type', 'application/json');
+  http.onload = () => {
+    if (http.status === 200) {
+      let userInfo = JSON.parse(http.responseText);
       let radioLabel = document.querySelector(`.mdl-checkbox input[value="${token}"] + .mdl-checkbox__label`);
       if (radioLabel) {
         radioLabel.innerHTML = `${userInfo.username}#${userInfo.discriminator}`;
@@ -37,11 +37,11 @@ function loadTokenUsername(token) {
         lastTokenFoundSpan.innerHTML = `(${userInfo.username}#${userInfo.discriminator})`;
       }
     }
-	};
-	var content = JSON.stringify({
-		'content': 'get infos'
-	});
-	http.send(content);
+  };
+  var content = JSON.stringify({
+    'content': 'get infos'
+  });
+  http.send(content);
 }
 
 function init() {
@@ -85,14 +85,12 @@ function init() {
         break;
       case 'tokensPolicy':
         console.log(`${tokenPolicyRadioGroupSelector}[value="${newValue}"] checked -> true`);
-        // let radioToCheck = document.querySelector(`${tokenPolicyRadioGroupSelector}[value="${newValue}"]`);
         let radioToCheck = document.querySelector(`.mdl-radio > ${tokenPolicyRadioGroupSelector}[value="${newValue}"]`);
         if (radioToCheck) {
           radioToCheck.checked = true;
           if (radioToCheck.parentElement.MaterialRadio) {
             radioToCheck.parentElement.MaterialRadio.check();
           }
-          // radioToCheck.parentElement.MaterialRadio.check();
         }
         break;
       case 'tokensFound':
@@ -173,15 +171,11 @@ function init() {
 
   config.load().then(() => {
     console.log('config loaded');
-    // let notificationsEnabledCB = document.getElementById('notifications_enabled');
-    // notificationsEnabledCB.checked = config.notificationsEnabled
     notificationsEnabledCB.onchange = (e) => {
       console.log('notificationsEnabledCB.onchange');
       config.notificationsEnabled = notificationsEnabledCB.checked;
     };
 
-    // let loggingEnabledCB = document.getElementById('logging_enabled');
-    // loggingEnabledCB.checked = config.loggingEnabled;
     loggingEnabledCB.onchange = (e) => {
       console.log('loggingEnabledCB.onchange');
       config.loggingEnabled = loggingEnabledCB.checked;
