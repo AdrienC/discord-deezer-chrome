@@ -31,7 +31,7 @@ audibleTabTitleTracker.onCurrentAudibleTabChange = (tabInfos) => {
     }
     if (config.notificationsEnabled) {
       notifier.notify(
-        `${chrome.i18n.getMessage('status')}: ${newStatus}`,
+        `${chrome.i18n.getMessage('status')}: ${newStatus ? newStatus : chrome.i18n.getMessage('statusNone')}`,
         tabInfos ? () => {
           chrome.tabs.update(tabInfos.id, { active: true });
           if (config.loggingEnabled) {
