@@ -96,7 +96,7 @@ export default class DiscordGateway {
     return {
       game: status === null ? null : {
         name: status,
-        type: 1,
+        type: 2,
       },
       status: 'online',
       since: null,
