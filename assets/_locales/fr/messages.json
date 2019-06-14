@@ -16,9 +16,6 @@
     "message": "Le statut ne peut être changé, le token utilisateur n'est pas renseigné."
   },
 
-  "apiLimitation": {
-    "message": "L'API Discord ne permet pas de voir vos propres changements de statut dans Discord, seuls les autres utilisateurs les verront."
-  },
   "tokens": {
     "message": "Comptes Discord utilisés"
   },

@@ -1,6 +1,6 @@
 {
   "name": "discord-deezer-chrome",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "This Chrome extension allows the user to display Deezer's current playing song in Discord status.",
   "main": "src/background.js",
   "scripts": {
