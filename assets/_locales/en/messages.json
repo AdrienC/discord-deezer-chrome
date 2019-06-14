@@ -21,10 +21,6 @@
     "description": "Can't set status because user token is not set."
   },
 
-  "apiLimitation": {
-    "message": "The Discord API doesn't allow you to see your status changes in Discord, only other users can.",
-    "description": "Explanation of the discord API limitation who prevents showing self status changes."
-  },
   "tokens": {
     "message": "Discord accounts used",
     "description": "User tokens"
