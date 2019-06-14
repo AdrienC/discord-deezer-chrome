@@ -59,7 +59,7 @@ export default class DiscordGateway {
   /* Send heartbeat */
   _sendHeartbeat() {
     if (this._ws && this._ws.readyState === WebSocket.OPEN) {
-      this._send(getOpHeartbeatPayload());
+      this._send(this._getOpHeartbeatPayload());
     }
   }
   _messageHandler(data) {
@@ -73,7 +73,7 @@ export default class DiscordGateway {
       break;
     case 10: /* hello */
       clearInterval(this._heartbeatTimer);
-      this._heartbeatTimer = setInterval(this._sendHeartbeat, data.d.heartbeat_interval)
+      this._heartbeatTimer = setInterval(this._sendHeartbeat.bind(this), data.d.heartbeat_interval)
       if (config.loggingEnabled) {
         console.log(`Token ${this._token}: received hello message: ${JSON.stringify(data, null, 4)}`);
       }
