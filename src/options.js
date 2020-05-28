@@ -20,7 +20,7 @@ localizeHtmlPage();
 let tokenPolicyRadioGroupSelector = 'input[type="radio"][name="tokens_policy"]';
 let lastTokenFoundSpan = document.getElementById('last_token_found');
 
-const GET_USER_URL = 'https://discordapp.com/api/users/@me';
+const GET_USER_URL = 'https://discord.com/api/users/@me';
 function loadTokenUsername(token) {
   let http = new XMLHttpRequest();
   http.open('GET', GET_USER_URL, true);
@@ -98,7 +98,7 @@ function init() {
           tokensSelection.innerHTML = `
             <li class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
-                ${chrome.i18n.getMessage('tokensNoneDetected')},&nbsp;<a href="https://discordapp.com/channels/@me" target="_blank">${chrome.i18n.getMessage('tokensConnectToDiscord')}</a>
+                ${chrome.i18n.getMessage('tokensNoneDetected')},&nbsp;<a href="https://discord.com/channels/@me" target="_blank">${chrome.i18n.getMessage('tokensConnectToDiscord')}</a>
               </span>
             </li>
           `;
