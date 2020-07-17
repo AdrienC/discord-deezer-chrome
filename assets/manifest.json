@@ -19,6 +19,6 @@
 		"notifications",
 		"storage",
 		"tabs",
-		"*://discordapp.com/*"
+		"*://discord.com/*"
 	]
 }
