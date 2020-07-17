@@ -1,6 +1,6 @@
 import config from './Config';
 
-const DISCORDAPP_HOSTNAME = 'discordapp.com';
+const DISCORDAPP_HOSTNAME = 'discord.com';
 const DISCORD_TAB_QUERY = { url: `*://${DISCORDAPP_HOSTNAME}/*` };
 
 export default class TokensTracker {
